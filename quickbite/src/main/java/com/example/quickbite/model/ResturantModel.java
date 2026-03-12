@@ -1,5 +1,7 @@
 package com.example.quickbite.model;
 
+import java.util.UUID;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,12 +23,15 @@ public class ResturantModel {
     private String resturantPhoneNumber;
     private String resturantEmail;
     private String resturantCuisineType;
+    private UUID confirmationToken;
+    private boolean isConfirmed;
 
-    public ResturantModel(String resturantName, String resturantAddress, String resturantPhoneNumber, String resturantEmail, String resturantCuisineType) {
+    public ResturantModel(String resturantName, String resturantAddress, String resturantPhoneNumber, String resturantEmail, String resturantCuisineType, UUID confirmationToken) {
         this.resturantName = resturantName;
         this.resturantAddress = resturantAddress;
         this.resturantPhoneNumber = resturantPhoneNumber;
         this.resturantEmail = resturantEmail;
         this.resturantCuisineType = resturantCuisineType;
+        this.confirmationToken = confirmationToken;
     }
 }

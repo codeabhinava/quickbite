@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.Optional;
 import com.example.quickbite.model.ConfirmationToken;
 
 @Repository
@@ -16,7 +16,7 @@ import com.example.quickbite.model.ConfirmationToken;
 
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Long> {
 
-    ConfirmationToken findByToken(UUID token);
+    Optional<ConfirmationToken> findByToken(UUID token);
 
     @Transactional
     @Modifying

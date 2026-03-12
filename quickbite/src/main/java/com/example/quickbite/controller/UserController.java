@@ -16,7 +16,7 @@ import com.example.quickbite.service.ConfirmationService;
 import com.example.quickbite.service.UserService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/quickbite/users")
 public class UserController {
 
     private final OTPProducer otpProducer;
@@ -44,9 +44,9 @@ public class UserController {
         return "User created successfully!";
     }
 
-    @GetMapping("/confirm")
+    /*@GetMapping("/confirm")
     public String confirmUser(@RequestParam UUID token) {
         confirmationService.confirmToken(token);
         return "User confirmed successfully!";
-    }
+    }*/
 }

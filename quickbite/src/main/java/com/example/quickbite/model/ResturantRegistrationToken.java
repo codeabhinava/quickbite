@@ -3,7 +3,6 @@ package com.example.quickbite.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,29 +13,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
 @NoArgsConstructor
-public class ConfirmationToken {
+@Data
+public class ResturantRegistrationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private UUID token;
+
     private LocalDateTime createdAt;
     private LocalDateTime expiresAt;
-
-    @Nullable
     private LocalDateTime confirmedAt;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "app_user_id")
-    private AppUser appUser;
+    @JoinColumn(nullable = false, name = "resturant_id")
+    private ResturantModel resturantModel;
 
-    public ConfirmationToken(UUID token, LocalDateTime createdAt, LocalDateTime expiresAt, AppUser appUser) {
+    public ResturantRegistrationToken(UUID token, LocalDateTime createdAt, LocalDateTime expiresAt, ResturantModel resturantModel) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.appUser = appUser;
+        this.resturantModel = resturantModel;
     }
 }

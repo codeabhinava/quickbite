@@ -1,9 +1,9 @@
 package com.example.quickbite.producer;
 
-import java.util.UUID;
-
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+
+import com.example.quickbite.common.Email;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EmailProducer {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Email> kafkaTemplate;
     private static final String TOPIC = "email-topic";
 
-    public void sendEmailConfirmation(String email, UUID token) {
-        String message = "Email: " + email + ", Confirmation Token: " + token;
-        kafkaTemplate.send(TOPIC, token.toString());
+    public void sendEmailConfirmation(Email email) {
+        String message = "Email: " + email.email() + ", Confirmation Token: " + email.confirmationToken();
+        kafkaTemplate.send(TOPIC, email);
         log.info("Sent email confirmation for Email:{} with Token:{} " + message);
     }
 }
