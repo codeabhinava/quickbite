@@ -5,14 +5,11 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.example.quickbite.model.ResturantModel;
 import com.example.quickbite.model.ResturantRegistrationToken;
-import com.example.quickbite.producer.EmailProducer;
+import com.example.quickbite.repository.ResturantModelRepository;
 import com.example.quickbite.repository.ResturantRegistrationTokenRepository;
 
 import jakarta.transaction.Transactional;
-
-import com.example.quickbite.repository.ResturantModelRepository;
 
 @Service
 public class ResturantRegistrationService {

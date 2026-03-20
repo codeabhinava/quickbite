@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.quickbite.model.UserRegistration;
-import com.example.quickbite.producer.EmailProducer;
 import com.example.quickbite.producer.OTPProducer;
 import com.example.quickbite.service.ConfirmationService;
 import com.example.quickbite.service.UserService;
@@ -20,20 +19,17 @@ import com.example.quickbite.service.UserService;
 public class UserController {
 
     private final OTPProducer otpProducer;
-    private final EmailProducer emailProducer;
     private final UserService userService;
     private final ConfirmationService confirmationService;
 
-    public UserController(OTPProducer otpProducer, EmailProducer emailProducer, UserService userService, ConfirmationService confirmationService) {
+    public UserController(OTPProducer otpProducer, UserService userService, ConfirmationService confirmationService) {
         this.otpProducer = otpProducer;
-        this.emailProducer = emailProducer;
         this.userService = userService;
         this.confirmationService = confirmationService;
     }
 
     @PostMapping("/send-otp")
     public String sendOTP() {
-        // Logic to generate OTP and send it using OTPProducer
         otpProducer.sendOTP("123456", "user123");
         return "OTP sent successfully!";
     }
@@ -44,9 +40,9 @@ public class UserController {
         return "User created successfully!";
     }
 
-    /*@GetMapping("/confirm")
+    @GetMapping("/confirm")
     public String confirmUser(@RequestParam UUID token) {
         confirmationService.confirmToken(token);
         return "User confirmed successfully!";
-    }*/
+    }
 }
