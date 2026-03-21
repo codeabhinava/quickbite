@@ -1,19 +1,18 @@
 package com.example.quickbite.model;
 
 import jakarta.persistence.Entity;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Data
-public class ResturantMenu {
+public class RestaurantMenu {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,16 +26,16 @@ public class ResturantMenu {
     private boolean isAvailable;
 
     @ManyToOne
-    @JoinColumn(name = "resturant_id", nullable = false)
-    private ResturantModel resturant;
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private RestaurantModel restaurant;
 
-    public ResturantMenu(String itemName, String itemImageUrl, String itemDescription, double itemPrice, String itemCategory, ResturantModel resturant, boolean isAvailable) {
+    public RestaurantMenu(String itemName, String itemImageUrl, String itemDescription, double itemPrice, String itemCategory, RestaurantModel restaurant, boolean isAvailable) {
         this.itemName = itemName;
         this.itemImageUrl = itemImageUrl;
         this.itemDescription = itemDescription;
         this.itemPrice = itemPrice;
         this.itemCategory = itemCategory;
-        this.resturant = resturant;
+        this.restaurant = restaurant;
         this.isAvailable = isAvailable;
     }
 }

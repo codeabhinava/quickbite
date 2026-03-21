@@ -20,17 +20,17 @@ public class Cart {
 
     @ManyToOne
     @JoinColumn(name = "menu_id", nullable = false)
-    private ResturantMenu menu;
+    private RestaurantMenu menu;
 
     @ManyToOne
-    @JoinColumn(name = "resturant_id", nullable = false)
-    private ResturantModel resturant;
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private RestaurantModel restaurant;
 
     private int quantity;
 
-    public Cart(ResturantMenu menu, ResturantModel resturant, int quantity) {
+    public Cart(RestaurantMenu menu, RestaurantModel restaurant, int quantity) {
         this.menu = menu;
-        this.resturant = resturant;
+        this.restaurant = restaurant;
         this.quantity = quantity;
 
     }

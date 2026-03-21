@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 import com.example.quickbite.common.Email;
 import com.example.quickbite.email.EmailSender;
 import com.example.quickbite.model.AppUser;
-import com.example.quickbite.model.ResturantModel;
+import com.example.quickbite.model.RestaurantModel;
 import com.example.quickbite.service.ConfirmationService;
-import com.example.quickbite.service.ResturantService;
+import com.example.quickbite.service.RestaurantService;
 import com.example.quickbite.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +21,13 @@ public class EmailConfirmConsumer {
 
     private final EmailSender emailSender;
     private final UserService userService;
-    private final ResturantService resturantService;
+    private final RestaurantService restaurantService;
 
-    public EmailConfirmConsumer(EmailSender emailSender, UserService userService, ResturantService resturantService) {
+    public EmailConfirmConsumer(EmailSender emailSender, UserService userService, RestaurantService restaurantService) {
 
         this.emailSender = emailSender;
         this.userService = userService;
-        this.resturantService = resturantService;
+        this.restaurantService = restaurantService;
     }
 
     @KafkaListener(topics = "email-topic", groupId = "email-group")
@@ -40,9 +40,9 @@ public class EmailConfirmConsumer {
             AppUser user = userService.getUserByToken(uuidToken);
             emailSender.send(user.getEmailId(), emailSender.buildEmail(user.getUsername(), link));
         } else {
-            String link = "http://localhost:7070/quickbite/resturants/confirm?token=" + uuidToken;
-            ResturantModel resturant = resturantService.getResturantByToken(uuidToken);
-            emailSender.send(resturant.getResturantEmail(), emailSender.buildEmail(resturant.getResturantName(), link));
+            String link = "http://localhost:7070/quickbite/restaurants/confirm?token=" + uuidToken;
+            RestaurantModel restaurant = restaurantService.getrestaurantByToken(uuidToken);
+            emailSender.send(restaurant.getRestaurantEmail(), emailSender.buildEmail(restaurant.getRestaurantName(), link));
         }
     }
 }

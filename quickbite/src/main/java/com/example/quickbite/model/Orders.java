@@ -18,20 +18,20 @@ public class Orders {
     private UUID order_id;
 
     @ManyToOne
-    @JoinColumn(name = "resturant_id", nullable = false)
-    private ResturantModel resturant;
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private RestaurantModel restaurant;
 
     @ManyToOne
     @JoinColumn(name = "menu_id", nullable = false)
-    private ResturantMenu menu;
+    private RestaurantMenu menu;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private AppUser user;
 
-    public Orders(UUID order_id, ResturantModel resturant, ResturantMenu menu, AppUser user) {
+    public Orders(UUID order_id, RestaurantModel restaurant, RestaurantMenu menu, AppUser user) {
         this.order_id = order_id;
-        this.resturant = resturant;
+        this.restaurant = restaurant;
         this.menu = menu;
         this.user = user;
     }

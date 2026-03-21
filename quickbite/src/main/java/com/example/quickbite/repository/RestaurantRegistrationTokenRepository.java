@@ -9,18 +9,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.quickbite.model.ResturantRegistrationToken;
+import com.example.quickbite.model.RestaurantRegistrationToken;
 
 import java.util.UUID;
 
 @Repository
 @Transactional(readOnly = true)
-public interface ResturantRegistrationTokenRepository extends JpaRepository<ResturantRegistrationToken, Long> {
+public interface RestaurantRegistrationTokenRepository extends JpaRepository<RestaurantRegistrationToken, Long> {
 
-    Optional<ResturantRegistrationToken> findByToken(UUID token);
+    Optional<RestaurantRegistrationToken> findByToken(UUID token);
 
     @Modifying
     @Transactional
-    @Query("Update ResturantRegistrationToken r SET r.confirmedAt= ?2 where r.token = ?1")
+    @Query("Update RestaurantRegistrationToken r SET r.confirmedAt= ?2 where r.token = ?1")
     int updateConfirmedAt(UUID token, LocalDateTime confirmedAt);
 }

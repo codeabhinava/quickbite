@@ -23,12 +23,12 @@ public class OrderHistory {
     private Orders orders;
 
     @ManyToOne
-    @JoinColumn(name = "resturant_id", nullable = false)
-    private ResturantModel resturant;
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private RestaurantModel restaurant;
 
     @ManyToOne
     @JoinColumn(name = "menu_id", nullable = false)
-    private ResturantMenu menu;
+    private RestaurantMenu menu;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -36,9 +36,9 @@ public class OrderHistory {
 
     private double bill;
 
-    public OrderHistory(Orders orders, ResturantModel resturant, ResturantMenu menu, AppUser user, double bill) {
+    public OrderHistory(Orders orders, RestaurantModel restaurant, RestaurantMenu menu, AppUser user, double bill) {
         this.orders = orders;
-        this.resturant = resturant;
+        this.restaurant = restaurant;
         this.menu = menu;
         this.user = user;
         this.bill = bill;

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Data
-public class ResturantRegistrationToken {
+public class RestaurantRegistrationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +28,13 @@ public class ResturantRegistrationToken {
     private LocalDateTime confirmedAt;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "resturant_id")
-    private ResturantModel resturantModel;
+    @JoinColumn(nullable = false, name = "restaurant_id")
+    private RestaurantModel restaurantModel;
 
-    public ResturantRegistrationToken(UUID token, LocalDateTime createdAt, LocalDateTime expiresAt, ResturantModel resturantModel) {
+    public RestaurantRegistrationToken(UUID token, LocalDateTime createdAt, LocalDateTime expiresAt, RestaurantModel restaurantModel) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.resturantModel = resturantModel;
+        this.restaurantModel = restaurantModel;
     }
 }

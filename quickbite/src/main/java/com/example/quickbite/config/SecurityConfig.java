@@ -1,7 +1,5 @@
 package com.example.quickbite.config;
 
-import java.beans.Encoder;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -30,11 +28,11 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/quickbite/resturants/**", "/users/**", "/resturants/**", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/quickbite/**", "/users/**", "/restaurants/**", "/css/**", "/js/**", "/images/**").permitAll()
                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                .defaultSuccessUrl("/users/home", true)
+                .defaultSuccessUrl("/quickbite/home", true)
                 )
                 .logout(logout -> logout
                 .logoutUrl("/logout")

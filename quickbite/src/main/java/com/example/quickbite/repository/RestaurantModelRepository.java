@@ -8,19 +8,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.quickbite.model.ResturantModel;
+import com.example.quickbite.model.RestaurantModel;
 
 @Repository
 @Transactional(readOnly = true)
-public interface ResturantModelRepository extends JpaRepository<ResturantModel, Long> {
+public interface RestaurantModelRepository extends JpaRepository<RestaurantModel, Long> {
 
-    ResturantModel findByResturantEmail(String resturantEmail);
+    RestaurantModel findByRestaurantEmail(String RestaurantEmail);
 
-    ResturantModel findByConfirmationToken(UUID confirmationToken);
+    RestaurantModel findByConfirmationToken(UUID confirmationToken);
 
     @Transactional
     @Modifying
-    @Query("Update ResturantModel r SET r.isConfirmed = true WHERE r.confirmationToken = ?1")
+    @Query("Update RestaurantModel r SET r.isConfirmed = true WHERE r.confirmationToken = ?1")
     int updateIsConfirmedBy(UUID confirmationToken);
 
 }
