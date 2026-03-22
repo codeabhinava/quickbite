@@ -23,15 +23,17 @@ public class RestaurantModel {
     private String restaurantPhoneNumber;
     private String restaurantEmail;
     private String restaurantCuisineType;
+    private String restaurantCoverImage;
     private UUID confirmationToken;
     private boolean isConfirmed;
 
-    public RestaurantModel(String restaurantName, String restaurantAddress, String restaurantPhoneNumber, String restaurantEmail, String restaurantCuisineType, UUID confirmationToken) {
+    public RestaurantModel(String restaurantName, String restaurantAddress, String restaurantPhoneNumber, String restaurantEmail, String restaurantCuisineType, String restaurantCoverImage, UUID confirmationToken) {
         this.restaurantName = restaurantName;
         this.restaurantAddress = restaurantAddress;
         this.restaurantPhoneNumber = restaurantPhoneNumber;
         this.restaurantEmail = restaurantEmail;
         this.restaurantCuisineType = restaurantCuisineType;
+        this.restaurantCoverImage = restaurantCoverImage;
         this.confirmationToken = confirmationToken;
     }
 }

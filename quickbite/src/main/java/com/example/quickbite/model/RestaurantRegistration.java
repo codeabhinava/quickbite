@@ -12,5 +12,6 @@ public class RestaurantRegistration {
     private String restaurantPhoneNumber;
     private String restaurantEmail;
     private String restaurantCuisineType;
+    private String restaurantCoverImage;
 
 }

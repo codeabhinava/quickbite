@@ -68,16 +68,19 @@
     <div class="row mt-4">
 
         <div class="col-md-3 mb-4"
-             th:each="res : ${restaurants}">
+             th:each="res : ${restaurants}"
+             >
 
-            <div class="restaurant-card bgs-white">
+            <div class="restaurant-card bg-white">
 
+                <img th:src="${res.restaurantCoverImage}"
+                     class="w-100 restaurant-img"/>
 
                 <div class="p-3">
-                    <h5 th:text="${res.restaurantName}"></h5>
+                    <h5 th:text="${res.restaurantName}">Restaurant Name</h5>
 
                     <p class="text-muted mb-1"
-                       th:text="${res.restaurantCuisineType}"></p>
+                       th:text="${res.restaurantCuisineType}">Cuisine</p>
 
                     <span class="rating">
                         ⭐ <span >4.5</span>
@@ -85,9 +88,11 @@
 
                     <p class="text-muted mt-2"
                        th:text="${res.restaurantAddress} + ' mins'">
-                       
+                        30 mins
                     </p>
 
+                    <a class="btn view-btn w-100 mt-2"
+                       th:href="@{'/menu/' + ${res.restaurantId}}">
                         View Menu
                     </a>
                 </div>

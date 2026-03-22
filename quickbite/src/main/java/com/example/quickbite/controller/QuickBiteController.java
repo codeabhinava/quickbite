@@ -12,7 +12,7 @@ import com.example.quickbite.service.RestaurantService;
 @RequestMapping("/quickbite")
 public class QuickBiteController {
 
-    private RestaurantService restaurantService;
+    private final RestaurantService restaurantService;
 
     public QuickBiteController(RestaurantService restaurantService) {
         this.restaurantService = restaurantService;
@@ -27,7 +27,6 @@ public class QuickBiteController {
     @GetMapping("/menu")
     public String menu(Model model) {
         model.addAttribute("restaurants", restaurantService.getrestaurants());
-
         return "restaurantPage";
     }
 

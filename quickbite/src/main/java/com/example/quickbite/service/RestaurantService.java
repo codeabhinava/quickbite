@@ -46,6 +46,7 @@ public class RestaurantService {
         restaurantModel.setRestaurantPhoneNumber(restaurantRegistration.getRestaurantPhoneNumber());
         restaurantModel.setRestaurantEmail(restaurantRegistration.getRestaurantEmail());
         restaurantModel.setRestaurantCuisineType(restaurantRegistration.getRestaurantCuisineType());
+        restaurantModel.setRestaurantCoverImage(restaurantRegistration.getRestaurantCoverImage());
         restaurantModel.setConfirmationToken(confirmationToken);
 
         restaurantRepository.save(restaurantModel);
@@ -54,6 +55,31 @@ public class RestaurantService {
         emailProducer.sendEmailConfirmation(email);
         return "Application received! We will review your application and get back to you soon.";
 
+    }
+
+    public String updateRestaurantDetails(UUID token, RestaurantRegistration restaurantRegistration) {
+        RestaurantModel restaurant = restaurantRepository.findByConfirmationToken(token);
+
+        if (restaurantRegistration.getRestaurantAddress() != null) {
+            restaurant.setRestaurantAddress(restaurantRegistration.getRestaurantAddress());
+        }
+        if (restaurantRegistration.getRestaurantCoverImage() != null) {
+            restaurant.setRestaurantCoverImage(restaurantRegistration.getRestaurantCoverImage());
+        }
+        if (restaurantRegistration.getRestaurantCuisineType() != null) {
+            restaurant.setRestaurantCuisineType(restaurantRegistration.getRestaurantCuisineType());
+        }
+        if (restaurantRegistration.getRestaurantEmail() != null) {
+            restaurant.setRestaurantEmail(restaurantRegistration.getRestaurantEmail());
+        }
+        if (restaurantRegistration.getRestaurantName() != null) {
+            restaurant.setRestaurantName(restaurantRegistration.getRestaurantName());
+        }
+        if (restaurantRegistration.getRestaurantPhoneNumber() != null) {
+            restaurant.setRestaurantPhoneNumber(restaurantRegistration.getRestaurantPhoneNumber());
+        }
+        restaurantRepository.save(restaurant);
+        return "Restaurant Details Updated";
     }
 
     public String addMenu(UUID token, List<MenuRegistration> restaurantMenu) {

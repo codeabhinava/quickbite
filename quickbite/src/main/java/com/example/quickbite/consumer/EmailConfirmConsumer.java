@@ -9,7 +9,6 @@ import com.example.quickbite.common.Email;
 import com.example.quickbite.email.EmailSender;
 import com.example.quickbite.model.AppUser;
 import com.example.quickbite.model.RestaurantModel;
-import com.example.quickbite.service.ConfirmationService;
 import com.example.quickbite.service.RestaurantService;
 import com.example.quickbite.service.UserService;
 

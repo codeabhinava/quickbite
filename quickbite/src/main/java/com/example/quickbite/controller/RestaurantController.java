@@ -44,6 +44,11 @@ public class RestaurantController {
         return "restaurant confirmed successfully!";
     }
 
+    @PatchMapping("/{token}/updateRestaurantDetails")
+    public String updateDetails(@PathVariable UUID token, @RequestBody RestaurantRegistration restaurantRegistration) {
+        return restaurantService.updateRestaurantDetails(token, restaurantRegistration);
+    }
+
     @PostMapping("/{token}/addMenu")
     public String addMenu(@PathVariable UUID token, @RequestBody List<MenuRegistration> menu) {
         return restaurantService.addMenu(token, menu);
