@@ -16,6 +16,8 @@ public interface RestaurantModelRepository extends JpaRepository<RestaurantModel
 
     RestaurantModel findByRestaurantEmail(String RestaurantEmail);
 
+    RestaurantModel findByRestaurantName(String restaurantName);
+
     RestaurantModel findByConfirmationToken(UUID confirmationToken);
 
     @Transactional

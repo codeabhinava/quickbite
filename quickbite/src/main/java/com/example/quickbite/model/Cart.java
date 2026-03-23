@@ -26,11 +26,16 @@ public class Cart {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private RestaurantModel restaurant;
 
+    @ManyToOne
+    @JoinColumn(name = "app_user", nullable = false)
+    private AppUser appUser;
+
     private int quantity;
 
-    public Cart(RestaurantMenu menu, RestaurantModel restaurant, int quantity) {
+    public Cart(RestaurantMenu menu, RestaurantModel restaurant, AppUser appUser, int quantity) {
         this.menu = menu;
         this.restaurant = restaurant;
+        this.appUser = appUser;
         this.quantity = quantity;
 
     }

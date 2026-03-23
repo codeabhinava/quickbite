@@ -26,8 +26,11 @@ public class RestaurantRegistrationService {
     @Transactional
     public String confirmToken(UUID token) {
         RestaurantRegistrationToken restaurantRegistrationToken = restaurantRegistrationTokenRepository.findByToken(token).orElseThrow(() -> new IllegalStateException("Token not found"));
-        if (restaurantRegistrationToken == null) {
-            return "Invalid token!";
+        if (restaurantRegistrationToken.getConfirmedAt() != null) {
+            return "Restaurant already Confirmed";
+        }
+        if (LocalDateTime.now().isAfter(restaurantRegistrationToken.getExpiresAt())) {
+            return "token expired";
         }
         restaurantRegistrationTokenRepository.updateConfirmedAt(token, LocalDateTime.now());
         restaurantRepository.updateIsConfirmedBy(token);

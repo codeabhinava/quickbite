@@ -120,6 +120,10 @@ public class RestaurantService {
         return restaurantRepository.findByConfirmationToken(token);
     }
 
+    public RestaurantModel getRestaurantByName(String restaurantName) {
+        return restaurantRepository.findByRestaurantName(restaurantName);
+    }
+
     public String deleteItem(UUID token, String item_name) {
 
         RestaurantModel restaurant = restaurantRepository.findByConfirmationToken(token);
@@ -128,12 +132,17 @@ public class RestaurantService {
         return "Item deleted";
     }
 
-    public Page<RestaurantMenu> getMenu() {
+    public Page<RestaurantMenu> getFeaturedDishes() {
         return restaurantMenuRepository.findByPrice(PageRequest.of(0, 5));
     }
 
     public List<RestaurantModel> getrestaurants() {
         return restaurantRepository.findAll();
+    }
+
+    public Page<RestaurantMenu> getRestaurantMenu(String restaurantName) {
+        RestaurantModel restaurant = getRestaurantByName(restaurantName);
+        return restaurantMenuRepository.findByRestaurant(restaurant, PageRequest.of(0, 10));
     }
 
 }

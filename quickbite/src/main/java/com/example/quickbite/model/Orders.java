@@ -29,10 +29,14 @@ public class Orders {
     @JoinColumn(name = "user_id", nullable = false)
     private AppUser user;
 
-    public Orders(UUID order_id, RestaurantModel restaurant, RestaurantMenu menu, AppUser user) {
+    private long quantity;
+
+    public Orders(UUID order_id, RestaurantModel restaurant, RestaurantMenu menu, AppUser user, long quantity) {
         this.order_id = order_id;
         this.restaurant = restaurant;
         this.menu = menu;
         this.user = user;
+        this.quantity = quantity;
+
     }
 }

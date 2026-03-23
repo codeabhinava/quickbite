@@ -1,6 +1,5 @@
 package com.example.quickbite.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -18,7 +17,7 @@ import com.example.quickbite.model.RestaurantModel;
 public interface RestaurantMenuRepository extends JpaRepository<RestaurantMenu, Long> {
 
     @Query("Select r from RestaurantMenu r where r.restaurant = ?1")
-    List<RestaurantMenu> findByRestaurant(RestaurantModel Restaurant);
+    Page<RestaurantMenu> findByRestaurant(RestaurantModel Restaurant, Pageable pageable);
 
     Optional<RestaurantMenu> findByRestaurantAndItemName(RestaurantModel Restaurant, String itemName);
 

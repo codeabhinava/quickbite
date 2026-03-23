@@ -35,7 +35,9 @@
         }
         a {
              text-decoration: none;
-             color:darkturquoise
+            font-size: 20px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: black;
         }
                 /* Hero Section */
         .hero {
@@ -113,7 +115,7 @@
 <body>
 
 <nav class="navbar navbar-expand-lg px-4">
-    <a class="navbar-brand fw-bold" href="#">🍔 QuickBite</a>
+    <a class="navbar-brand fw-bold" th:href="@{/quickbite/home}">🍔 QuickBite</a>
 
     <div class="ms-auto">
         <a class="home-btn" th:href="@{/}">Home</a>
@@ -148,11 +150,11 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between">
         <h2>Featured Dishes</h2>
-        <a th:href="@{/items}">View All →</a>
+        <a th:href="@{/quickbite/viewRestaurants}">View All →</a>
     </div>
 
     <div class="row mt-4">
-        <div class="col-md-3" th:each="item : ${menu}">
+        <div class="col-md-3" th:each="item : ${featuredDishes}">
             <div class="card p-3">
 
                 <img th:src="${item.itemImageUrl}" class="card-img-top"/>
@@ -181,8 +183,8 @@
 <section class="cta mt-5">
     <h2>Hungry? Order Now!</h2>
     <p>Browse our full menu and get your favorites delivered fast</p>
-    <a th:href="@{/quickbite/menu}">
-        <button>Browse Menu →</button>
+    <a th:href="@{/quickbite/viewRestaurants}">
+        <button>Browse Restaurants →</button>
     </a>
 </section>
 
