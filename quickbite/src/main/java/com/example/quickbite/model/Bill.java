@@ -19,7 +19,7 @@ public class Bill {
     private long billId;
 
     @ManyToOne
-    @JoinColumn(name = "order", nullable = false)
+    @JoinColumn(name = "orders_id", nullable = false)
     private Orders orders;
 
     private long total;

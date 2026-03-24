@@ -78,7 +78,7 @@
 
     <div class="hero-overlay">
 
-        <a th:href="@{/restaurants}" class="text-white text-decoration-none">
+        <a th:href="@{/quickbite/viewRestaurants}" class="text-white text-decoration-none">
             ← Back to Restaurants
         </a>
 
@@ -127,13 +127,15 @@
                               th:text="'$' + ${item.itemPrice}">
                             $10
                         </span>
-
-                        <a class="btn add-btn"
-                           th:href="@{'/cart/add/' + ${item.itemName}}" th:text="cart.quantity">
+                    <form method="post" th:action="@{/quickbite/addeditem}">
+                        <input type="hidden" name="item_id" th:value="${item.itemID}" />
+                        <input type="hidden" name="restaurantName" th:value="${restaurant.restaurantName}" />
+                        <button class="btn add-btn">
                             🛒 Add
-                        </a>
+                    </button>
+                    </form>
                     </div>
-
+                    
                 </div>
 
             </div>
