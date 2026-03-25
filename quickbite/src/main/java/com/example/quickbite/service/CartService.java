@@ -1,5 +1,9 @@
 package com.example.quickbite.service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.example.quickbite.model.AppUser;
@@ -44,6 +48,57 @@ public class CartService {
             cartRepository.save(cart);
         }
 
+    }
+
+    public void removefromCart(Long item_id, String userName) {
+
+        RestaurantMenu menu = restaurantMenuRepositroy.findById(item_id).orElseThrow();
+
+        AppUser user = userRepository.findByUserName(userName);
+
+        Cart cart = cartRepository.findByUserandItemId(user, menu.getItemID()).orElseThrow();
+        cart.setQuantity(cart.getQuantity() - 1);
+        if (cart.getQuantity() == 0) {
+            cartRepository.delete(cart);
+        } else {
+
+            cartRepository.save(cart);
+        }
+    }
+
+    public void deletefromCart(Long item_id, String userName) {
+
+        RestaurantMenu menu = restaurantMenuRepositroy.findById(item_id).orElseThrow();
+
+        AppUser user = userRepository.findByUserName(userName);
+
+        Cart cart = cartRepository.findByUserandItemId(user, menu.getItemID()).orElseThrow();
+
+        cartRepository.delete(cart);
+    }
+
+    public Map<Long, Integer> getQuantity(String userName, RestaurantModel restaurant) {
+        AppUser user = userRepository.findByUserName(userName);
+        List<Cart> cart = cartRepository.findByUserandRestaurant(user, restaurant);
+        return cart.stream().collect(Collectors.toMap(c -> c.getMenu().getItemID(), Cart::getQuantity));
+    }
+
+    public List<Cart> viewCart(String userName) {
+        AppUser user = userRepository.findByUserName(userName);
+        List<Cart> cart = cartRepository.findByAppUser(user);
+        if (cart.isEmpty()) {
+            return cart;
+        } else {
+
+            Cart item = cart.get(cart.size() - 1);
+            RestaurantModel latestRestaurant = item.getRestaurant();
+            return cartRepository.findByUserandRestaurant(user, latestRestaurant);
+        }
+    }
+
+    public Double cartTotal(String userName) {
+        AppUser user = userRepository.findByUserName(userName);
+        return cartRepository.getTotalPrice(user);
     }
 
 }

@@ -66,9 +66,9 @@
     <a th:href="@{/quickbite/home}">🍔 QuickBite</a>
 
     <div>
-        <a class="me-3 text-decoration-none" th:href="@{/}">Home</a>
-        <a class="me-3 text-decoration-none" th:href="@{/restaurants}">Restaurants</a>
-        <a class="btn btn-warning text-white" th:href="@{/cart}">Cart</a>
+        <a class="me-3 text-decoration-none" th:href="@{/quickbite/home}">Home</a>
+        <a class="me-3 text-decoration-none" th:href="@{/quickbite/viewRestaurants}">Restaurants</a>
+        <a class="btn btn-warning text-white" th:href="@{/quickbite/cart}">Cart</a>
     </div>
 </nav>
 
@@ -127,13 +127,38 @@
                               th:text="'$' + ${item.itemPrice}">
                             $10
                         </span>
-                    <form method="post" th:action="@{/quickbite/addeditem}">
+                    <form th:unless="${cartQuantity != null and cartQuantity.containsKey(item.itemID)}"
+                        method="post" th:action="@{/quickbite/addeditem}">
                         <input type="hidden" name="item_id" th:value="${item.itemID}" />
                         <input type="hidden" name="restaurantName" th:value="${restaurant.restaurantName}" />
-                        <button class="btn add-btn">
-                            🛒 Add
-                    </button>
+                        <button class="btn add-btn">🛒 Add</button>
                     </form>
+
+                        <div th:if="${cartQuantity != null and cartQuantity.containsKey(item.itemID)}"
+                            class="d-flex align-items-center gap-2">
+
+                            <form method="post" th:action="@{/quickbite/remove}">
+                                <input type="hidden" name="item_id" th:value="${item.itemID}" />
+                                <input type="hidden" name="restaurantName" th:value="${restaurant.restaurantName}"/>
+                                <button name="action" value="decrease" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                            
+
+
+                            <form method="post" th:action="@{/quickbite/decrement}">
+                                <input type="hidden" name="item_id" th:value="${item.itemID}" />
+                                <input type="hidden" name="restaurantName" th:value="${restaurant.restaurantName}"/>
+                                <button name="action" value="decrease" class="btn btn-sm btn-outline-danger">−</button>
+                            </form>
+                            
+                                <span th:text="${cartQuantity.get(item.itemID)}">1</span>
+
+                            <form method="post" th:action="@{/quickbite/increment}">
+                                <input type="hidden" name="item_id" th:value="${item.itemID}" />
+                                <input type="hidden" name="restaurantName" th:value="${restaurant.restaurantName}"/>
+                                <button name="action" value="increase" class="btn btn-sm add-btn">+</button>
+                            </form>
+                        </div>
                     </div>
                     
                 </div>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.quickbite.repository.CartRepository;
 import com.example.quickbite.service.CartService;
 import com.example.quickbite.service.RestaurantService;
 
@@ -33,6 +34,7 @@ public class QuickBiteController {
     @GetMapping("/home")
     public String homePage(Model model) {
         model.addAttribute("featuredDishes", restaurantService.getFeaturedDishes());
+
         return "homepage";
     }
 
@@ -44,8 +46,11 @@ public class QuickBiteController {
 
     @GetMapping("/{restaurantName}/viewMenu")
     public String restaurantmenu(@PathVariable String restaurantName, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String user = auth.getName();
         model.addAttribute("restaurant", restaurantService.getRestaurantByName(restaurantName));
         model.addAttribute("menuItems", restaurantService.getRestaurantMenu(restaurantName));
+        model.addAttribute("cartQuantity", cartService.getQuantity(user, restaurantService.getRestaurantByName(restaurantName)));
         return "restaurantPage";
     }
 
@@ -54,9 +59,53 @@ public class QuickBiteController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String user = auth.getName();
         cartService.addtoCart(item_id, user);
-        log.info(user);
-        log.info(restaurantName);
         return "redirect:/quickbite/" + restaurantName + "/viewMenu";
+    }
+
+    @PostMapping("/increment")
+    public String increaseQuantity(@RequestParam Long item_id, @RequestParam String restaurantName) {
+        return addToCart(item_id, restaurantName);
+    }
+
+    @PostMapping("/decrement")
+    public String decreaseQuantity(@RequestParam Long item_id, @RequestParam String restaurantName) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String user = auth.getName();
+        cartService.removefromCart(item_id, user);
+        return "redirect:/quickbite/" + restaurantName + "/viewMenu";
+    }
+
+    @PostMapping("/remove")
+    public String removeFromCart(@RequestParam Long item_id, @RequestParam String restaurantName) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String user = auth.getName();
+        cartService.deletefromCart(item_id, user);
+        return "redirect:/quickbite/" + restaurantName + "/viewMenu";
+    }
+
+    @GetMapping("/cart")
+    public String viewCart(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String user = auth.getName();
+        model.addAttribute("cartItems", cartService.viewCart(user));
+        model.addAttribute("cartTotal", cartService.cartTotal(user));
+        return "cartPage";
+    }
+
+    @PostMapping("/cart/increment/{item_id}")
+    public String increaseCart(@PathVariable long item_id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userName = auth.getName();
+        cartService.addtoCart(item_id, userName);
+        return "redirect:/quickbite/cart";
+    }
+
+    @PostMapping("/cart/decrement/{item_id}")
+    public String decreaseCart(@PathVariable long item_id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userName = auth.getName();
+        cartService.removefromCart(item_id, userName);
+        return "redirect:/quickbite/cart";
     }
 
 }
