@@ -1,18 +1,23 @@
 package com.example.quickbite.controller;
 
+import java.util.UUID;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.quickbite.repository.CartRepository;
+import com.example.quickbite.model.Address;
+import com.example.quickbite.service.AddressService;
 import com.example.quickbite.service.CartService;
+import com.example.quickbite.service.OrderService;
 import com.example.quickbite.service.RestaurantService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +30,14 @@ public class QuickBiteController {
 
     private final RestaurantService restaurantService;
     private final CartService cartService;
+    private final AddressService addressService;
+    private final OrderService orderService;
 
-    public QuickBiteController(RestaurantService restaurantService, CartService cartService) {
+    public QuickBiteController(RestaurantService restaurantService, CartService cartService, AddressService addressService, OrderService orderService) {
         this.restaurantService = restaurantService;
         this.cartService = cartService;
+        this.addressService = addressService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/home")
@@ -106,6 +115,28 @@ public class QuickBiteController {
         String userName = auth.getName();
         cartService.removefromCart(item_id, userName);
         return "redirect:/quickbite/cart";
+    }
+
+    @GetMapping("/checkout")
+    public String checkout(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userName = auth.getName();
+        model.addAttribute("cartItems", cartService.viewCart(userName));
+        model.addAttribute("total", cartService.cartTotal(userName));
+        model.addAttribute("addresses", addressService.getAddress(userName));
+        return "checkoutPage";
+    }
+
+    @PostMapping("/checkout/order-placed")
+    public String placeOrder(@ModelAttribute Address address, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String user = auth.getName();
+        UUID orderId = UUID.randomUUID();
+        model.addAttribute("order_id", orderId);
+        addressService.saveAddress(user, address);
+        orderService.addOrder(user, cartService.viewCart(user), orderId);
+        cartService.orderPlaced(user);
+        return "orderplacedPage";
     }
 
 }

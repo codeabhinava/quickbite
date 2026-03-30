@@ -13,19 +13,16 @@ import com.example.quickbite.model.RestaurantModel;
 import com.example.quickbite.repository.AppUserRepository;
 import com.example.quickbite.repository.CartRepository;
 import com.example.quickbite.repository.RestaurantMenuRepository;
-import com.example.quickbite.repository.RestaurantModelRepository;
 
 @Service
 public class CartService {
 
     private final RestaurantMenuRepository restaurantMenuRepositroy;
-    private final RestaurantModelRepository restaurantRepository;
     private final CartRepository cartRepository;
     private final AppUserRepository userRepository;
 
-    public CartService(RestaurantMenuRepository restaurantMenuRepositroy, RestaurantModelRepository restaurantRepository, CartRepository cartRepository, AppUserRepository userRepository) {
+    public CartService(RestaurantMenuRepository restaurantMenuRepositroy, CartRepository cartRepository, AppUserRepository userRepository) {
         this.restaurantMenuRepositroy = restaurantMenuRepositroy;
-        this.restaurantRepository = restaurantRepository;
         this.cartRepository = cartRepository;
         this.userRepository = userRepository;
     }
@@ -99,6 +96,14 @@ public class CartService {
     public Double cartTotal(String userName) {
         AppUser user = userRepository.findByUserName(userName);
         return cartRepository.getTotalPrice(user);
+    }
+
+    public void orderPlaced(String userName) {
+        AppUser user = userRepository.findByUserName(userName);
+        List<Cart> cart = cartRepository.findByAppUser(user);
+        Cart item = cart.get(cart.size() - 1);
+        List<Cart> cartByRestaurant = cartRepository.findByUserandRestaurant(user, item.getRestaurant());
+        cartRepository.deleteAll(cartByRestaurant);
     }
 
 }
