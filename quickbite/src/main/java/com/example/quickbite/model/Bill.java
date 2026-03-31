@@ -22,13 +22,13 @@ public class Bill {
     @JoinColumn(name = "orders_id", nullable = false)
     private Orders orders;
 
-    private long total;
-    private long platformFee;
-    private long deliveryFee;
-    private long discount;
-    private long tax;
+    private double total;
+    private double platformFee;
+    private double deliveryFee;
+    private double discount;
+    private double tax;
 
-    public Bill(Orders orders, long total, long platformFee, long deliveryFee, long discount, long tax) {
+    public Bill(Orders orders, double total, double platformFee, double deliveryFee, double discount, double tax) {
         this.orders = orders;
         this.total = total;
         this.platformFee = platformFee;

@@ -33,6 +33,10 @@
             border-radius: 10px;
             padding: 10px 20px;
         }
+        a{
+            text-decoration: none;
+        }
+
     </style>
 </head>
 
@@ -73,11 +77,11 @@
     </p>
 
     <div class="mt-4">
-        <a th:href="@{/}" class="btn btn-primary-custom me-2">
+        <a th:href="@{/quickbite/home}" class="btn btn-primary-custom me-2">
             Go Home
         </a>
 
-        <a  class="btn btn-outline-secondary">
+        <a th:href="@{/quickbite/viewRestaurants}" class="btn btn-outline-secondary">
             Order More
         </a>
     </div>

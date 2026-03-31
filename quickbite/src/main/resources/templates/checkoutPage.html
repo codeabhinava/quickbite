@@ -50,29 +50,56 @@
 
         <div class="card mb-4">
             <h4>Delivery Address</h4>
+<form th:action="@{/quickbite/checkout/order-placed}" method="post">
 
-            <form th:action="@{/quickbite/checkout/order-placed}" method="post" >
+    <!-- SAVED ADDRESS -->
+    <div th:if="${addresses != null and !#lists.isEmpty(addresses)}">
 
-                <select name="addressId">
-                    <option th:if="${addresses!=null}" th:each="address : ${addresses}" 
-                            th:value="${address.phoneNo}"
-                            th:text="${address.fullName + ' - ' + address.fullAddress 
-                            + '  -   '    + address.phoneNo}">
-                    </option>
-                </select>
-                <h5>Payment Method</h5>
+        <h5 class="mb-2">📍 Select Saved Address</h5>
 
-                <select class="form-control mb-3" name="paymentMethod">
-                    <option>Cash on Delivery</option>
-                    <option>UPI</option>
-                    <option>Card</option>
-                </select>
+        <select class="form-control custom-input mb-3" name="addressId">
+            <option value="">-- Select Address --</option>
 
-                <button type="submit" class="btn place-order-btn">
-                    Place Order
-                </button>
+            <option th:each="address : ${addresses}"
+                    th:value="${address.id}"
+                    th:text="${address.fullName + ' - ' + address.fullAddress + ' - ' + address.phoneNo}">
+            </option>
+        </select>
 
-            </form>
+        <div class="text-center text-muted mb-3">OR</div>
+
+    </div>
+
+    <!-- NEW ADDRESS -->
+    <div>
+        <h5 class="mb-2">➕ Add New Address</h5>
+
+        <input class="form-control custom-input mb-3"
+               name="FullName" placeholder="Full Name">
+
+        <input class="form-control custom-input mb-3"
+               name="PhoneNo" placeholder="Phone Number">
+
+        <textarea class="form-control custom-input mb-3"
+                  name="FullAddress"
+                  placeholder="Full Address"></textarea>
+    </div>
+
+    <!-- PAYMENT -->
+    <h5>💳 Payment Method</h5>
+
+    <select class="form-control custom-input mb-3" name="paymentMethod">
+        <option>Cash on Delivery</option>
+        <option>UPI</option>
+        <option>Card</option>
+    </select>
+
+    <!-- BUTTON -->
+    <button type="submit" class="btn place-order-btn w-100">
+        Place Order
+    </button>
+
+</form>
         </div>
 
     </div>
